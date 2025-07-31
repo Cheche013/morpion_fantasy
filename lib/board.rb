@@ -1,11 +1,12 @@
 require_relative 'board_case'
-require 'colorize'
+require 'pastel'  
 
 class Board
   attr_accessor :cases
 
   def initialize
     @cases = {}
+    @pastel = Pastel.new 
 
     ["A", "B", "C"].each do |row|
       ["1", "2", "3"].each do |col|
@@ -14,7 +15,7 @@ class Board
       end
     end
   end
-
+  
   def display
     puts
     puts "     1   2   3"
@@ -23,11 +24,19 @@ class Board
       print " #{row} |"
       ["1", "2", "3"].each do |col|
         pos = row + col
-        print " #{@cases[pos].value} |"
+        case @cases[pos].value
+        when "X"
+          print " #{@pastel.green("X")} |"
+        when "O"
+          print " #{@pastel.red("O")} |"
+        else
+          print "   |"
+        end
       end
       puts "\n   +---+---+---+"
     end
   end
+  
 
   def play_turn(position, symbol)
     if @cases[position] && @cases[position].value == " "
