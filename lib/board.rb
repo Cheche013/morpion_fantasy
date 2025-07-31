@@ -1,4 +1,5 @@
 require_relative 'board_case'
+require 'colorize'
 
 class Board
   attr_accessor :cases
